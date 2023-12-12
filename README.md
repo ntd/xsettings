@@ -1,6 +1,6 @@
-XSettings provides a simple persistent storage backend for a specific
+XSettings provides a basic persistent storage backend for a specific
 set of variables in [open62541](https://github.com/open62541/open62541)
-based OPC/UA servers. It is implemented in the simple way I know of,
+based OPC/UA servers. It is implemented in the simplest way I know of,
 i.e. directly mmap()ing the struct containing all variables to a binary
 file. Any time a variable changes, the mapped memory is msync()ed
 **asyncrhronously**, so this code can be used in real-time contexts.
@@ -9,10 +9,11 @@ How to use
 ----------
 
 To get the introspection data needed, the code heavily leverages the
-XMacros technique (hence the X in XSettings). This in turn means this
-cannot be a library: the source code must be embedded in your project.
+preprocessor using the X-Macro technique (hence the X in XSettings).
+This in turn means this project cannot be a library: the source code
+must be embedded in some way into your project.
 
-A typical way to include XSettings in you project could be:
+The typical way of doing it is:
 
 1. copy `xsettings.c` and `xsettings.h` to your source folder
 2. define `xsettings-schema.h`
@@ -27,8 +28,7 @@ How it works
 
 The main function is `xsettings_register()`. When you call it, XSettings
 populates the folder you specified with all the settings you defined in
-`xsettings-schema.h`. Their last values will be stored in the mapped
-binary file.
+your schema. Their last values will be stored in the mapped binary file.
 
 WARNING! You must create the binary file backing up your XSettings
 schema before using them, otherwise `xsettings_register()` will fail.
@@ -65,7 +65,7 @@ There are only 5 public functions.
   new file by calling `xsettings_reset()`. The resulting opaque pointer
   must be freed with `xsettings_free()` when done.
 - `void xsettings_free(XSettings xsettings)`<br>
-  Closes whatever opened by `xsettings_new`.
+  No other XSettings APIs should be called after.
 - `UA_StatusCode xsettings_reset(XSettings xsettings)`<br>
   It creates the file to be mapped (or overwrite it) using the default
   values specified by the schema.
@@ -74,8 +74,8 @@ There are only 5 public functions.
   purposedly compatible with `xsettings-schema.h`, so you can easily
   overwrite it to e.g. update the default values.
 - `UA_StatusCode xsettings_register(XSettings xsettings, UA_Server *opcua, UA_NodeId folder)`<br>
-  The real meat of this project: `mmap()` the file (so it must exists)
-  and register all fields found in `xsettings-schema.h` as
+  The real meat of this project: mmap() the file (so it must exists)
+  and register all fields found in your schema as
   [data source](https://www.open62541.org/doc/1.3/server.html#data-source-callback)
   variables under `folder`.
 
