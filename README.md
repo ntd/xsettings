@@ -78,3 +78,20 @@ There are only 5 public functions.
   and register all fields found in `xsettings-schema.h` as
   [data source](https://www.open62541.org/doc/1.3/server.html#data-source-callback)
   variables under `folder`.
+
+Building the demo
+-----------------
+
+To build the demo program you must have `open62541` preinstalled. Then
+you can compile it in the usual `meson` way:
+```sh
+$ meson setup build
+...
+$ meson compile -C build
+...
+$ cd build/demo
+$ ./xsettings-demo -c
+... Creating settings
+$ ./xsettings-demo
+...
+```
