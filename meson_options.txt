@@ -1,0 +1,4 @@
+option('test',
+       type: 'feature',
+       value: 'auto',
+       description: 'Run the test suite')
