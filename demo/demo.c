@@ -1,10 +1,3 @@
-/* This work is licensed under a Creative Commons CCZero 1.0 Universal License.
- * See http://creativecommons.org/publicdomain/zero/1.0/ for more information.
- *
- * This code is an adaptation of the basic example found in Open62541:
- * https://github.com/open62541/open62541/blob/v1.3.9/examples/server.cpp
- */
-
 #include <open62541/server.h>
 #include <open62541/server_config_default.h>
 #include <open62541/plugin/log_stdout.h>
