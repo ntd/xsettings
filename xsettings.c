@@ -1,24 +1,24 @@
 #define XSTRING_MAX 255
-typedef char _XString[XSTRING_MAX + 1];
+typedef char XString[XSTRING_MAX + 1];
 
 #define XINT32          UA_TYPES_INT32, UA_Int32
 #define XUINT32         UA_TYPES_UINT32, UA_UInt32
 #define XBOOLEAN        UA_TYPES_BOOLEAN, UA_Boolean
 #define XDOUBLE         UA_TYPES_DOUBLE, UA_Double
-#define XSTRING         UA_TYPES_STRING, _XString
+#define XSTRING         UA_TYPES_STRING, XString
 
 #define SET_DEFAULT_SCALAR(dst, src)      dst = src;
 #define SET_DEFAULT_UA_Int32(dst, src)    SET_DEFAULT_SCALAR(dst, src)
 #define SET_DEFAULT_UA_UInt32(dst, src)   SET_DEFAULT_SCALAR(dst, src)
 #define SET_DEFAULT_UA_Boolean(dst, src)  SET_DEFAULT_SCALAR(dst, src)
 #define SET_DEFAULT_UA_Double(dst, src)   SET_DEFAULT_SCALAR(dst, src)
-#define SET_DEFAULT__XString(dst, src)    strcpy(dst, src)
+#define SET_DEFAULT_XString(dst, src)     strcpy(dst, src)
 
 #define TO_VARIANT_UA_Int32(dst, src)    UA_Variant_setScalar(&dst, &src, &UA_TYPES[UA_TYPES_INT32])
 #define TO_VARIANT_UA_UInt32(dst, src)   UA_Variant_setScalar(&dst, &src, &UA_TYPES[UA_TYPES_UINT32])
 #define TO_VARIANT_UA_Boolean(dst, src)  UA_Variant_setScalar(&dst, &src, &UA_TYPES[UA_TYPES_BOOLEAN])
 #define TO_VARIANT_UA_Double(dst, src)   UA_Variant_setScalar(&dst, &src, &UA_TYPES[UA_TYPES_DOUBLE])
-#define TO_VARIANT__XString(dst, src) \
+#define TO_VARIANT_XString(dst, src) \
     do { \
         UA_String tmp = UA_STRING(src); \
         UA_Variant_setScalar(&dst, &tmp, &UA_TYPES[UA_TYPES_STRING]); \
@@ -28,7 +28,7 @@ typedef char _XString[XSTRING_MAX + 1];
 #define FROM_VARIANT_UA_UInt32(dst, src)   dst = * (UA_UInt32 *) src.data
 #define FROM_VARIANT_UA_Boolean(dst, src)  dst = * (UA_Boolean *) src.data
 #define FROM_VARIANT_UA_Double(dst, src)   dst = * (UA_Double *) src.data
-#define FROM_VARIANT__XString(dst, src) \
+#define FROM_VARIANT_XString(dst, src) \
     do { \
         UA_String *s = (UA_String *) src.data; \
         if (s->length > XSTRING_MAX) return UA_STATUSCODE_BADOUTOFMEMORY; \
@@ -78,7 +78,7 @@ print_type_value(int idx, const void *value)
         printf("XDOUBLE,  %8g", * (UA_Double *) value);
         break;
     case UA_TYPES_STRING:
-        printf("XSTRING, \"%s\"", * (_XString *) value);
+        printf("XSTRING, \"%s\"", * (XString *) value);
     }
 }
 
