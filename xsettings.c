@@ -1,6 +1,3 @@
-#define XSTRING_MAX 255
-typedef char XString[XSTRING_MAX + 1];
-
 #define XINT32          UA_TYPES_INT32, UA_Int32
 #define XUINT32         UA_TYPES_UINT32, UA_UInt32
 #define XBOOLEAN        UA_TYPES_BOOLEAN, UA_Boolean
@@ -31,7 +28,7 @@ typedef char XString[XSTRING_MAX + 1];
 #define FROM_VARIANT_XString(dst, src) \
     do { \
         UA_String *s = (UA_String *) src.data; \
-        if (s->length > XSTRING_MAX) return UA_STATUSCODE_BADOUTOFMEMORY; \
+        if (s->length > XSTRING_LEN) return UA_STATUSCODE_BADOUTOFMEMORY; \
         memcpy(dst, s->data, s->length); \
         dst[((UA_String *) src.data)->length] = '\0'; \
     } while (0)
@@ -46,6 +43,8 @@ typedef char XString[XSTRING_MAX + 1];
 #include <sys/mman.h>
 #include <unistd.h>
 
+
+typedef char XString[XSTRING_LEN + 1];
 
 typedef struct {
 #define X_(name, idx, type, defvalue, description) \
@@ -207,9 +206,10 @@ xsettings_dump(XSettings xsettings)
 #undef X_
     ++width;
 
-    printf("#define XSETTINGS \\\n"
+    printf("#define XSTRING_LEN %d\n"
+           "#define XSETTINGS \\\n"
            "    /*%-*s TYPE       DEFAULT   DESCRIPTION */ \\\n",
-           width, "NAME");
+           XSTRING_LEN, width, "NAME");
 #define X_(name, idx, type, defvalue, description) \
     printf("    X(%-*s ", width, #name ","); \
     print_type_value(idx, &contents.name); \

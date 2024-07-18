@@ -1,3 +1,4 @@
+#define XSTRING_LEN 255
 #define XSETTINGS \
     /*NAME     TYPE       DEFAULT   DESCRIPTION */ \
     X(Boolean, XBOOLEAN,     true, "Boolean flag setting") \
