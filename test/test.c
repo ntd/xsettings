@@ -113,7 +113,11 @@ data_sources(void **state)
     status = xsettings_register(xsettings, server, folder);
     assert_int_equal(status, UA_STATUSCODE_BADTIMEOUT);
 
-    /* 8 fields in the XSettings schema = 8 data sources */
+    /* 10 fields in the XSettings schema = 10 data sources */
+    expect_value(__wrap_UA_Server_addDataSourceVariableNode, server, server);
+    will_return(__wrap_UA_Server_addDataSourceVariableNode, UA_STATUSCODE_GOOD);
+    expect_value(__wrap_UA_Server_addDataSourceVariableNode, server, server);
+    will_return(__wrap_UA_Server_addDataSourceVariableNode, UA_STATUSCODE_GOOD);
     expect_value(__wrap_UA_Server_addDataSourceVariableNode, server, server);
     will_return(__wrap_UA_Server_addDataSourceVariableNode, UA_STATUSCODE_GOOD);
     expect_value(__wrap_UA_Server_addDataSourceVariableNode, server, server);

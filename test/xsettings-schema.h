@@ -8,4 +8,6 @@
     X(U32_34,     XUINT32,  34,       "34 unsigned 32 bits") \
     X(Double_56,  XDOUBLE,  5.6,      "5.6 double") \
     X(Double__78, XDOUBLE,  -7.8,     "-7.8 double") \
+    X(Empty,      XSTRING,  "",       "Empty string") \
+    X(String,     XSTRING,  "String", "Generic string value") \
 /* EOF */

@@ -21,7 +21,8 @@ The typical way of doing it is:
 4. integrate your build system to compile and link with your app.
 
 See the `demo` folder for a basic example. Actually, only `UA_Boolean`,
-`UA_Int32`, `UA_UInt32` and `UA_Double` types are implemented.
+`UA_Int32`, `UA_UInt32`, `UA_Double` and `UA_String` (up to 255 bytes)
+types are implemented.
 
 How it works
 ------------
