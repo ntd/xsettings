@@ -1,26 +1,27 @@
 *XSettings* provides a basic persistent storage backend for a specific
 set of variables in [open62541](https://github.com/open62541/open62541)
 based OPC/UA servers. It is implemented in the simplest way I know of,
-i.e. directly mmap()ing the struct containing all variables to a binary
-file. Any time a variable changes, the mapped memory is msync()ed
+i.e. directly mmap()ing the struct containing all variable values to a
+binary file. Any time a variable changes, the mapped memory is msync()ed
 **asynchronously**, so this code can be used in real-time contexts.
 
 How to use
 ----------
 
 To get the introspection data needed, the code heavily leverages the
-preprocessor using the X-Macro technique (hence the X in *XSettings*).
-This in turn means this project cannot be a library: the source code
-must be embedded in some way into your project.
+preprocessor using the [X-Macro](https://en.wikipedia.org/wiki/X_macro)
+technique (hence the X in *XSettings*). This in turn means this project
+cannot be a library: the source code must be embedded in some way into
+your project.
 
-The typical way of doing it is:
+The typical way of doing that is:
 
 1. copy `xsettings.c` and `xsettings.h` into your source folder;
-2. define your schema by creating your `xsettings-schema.h`;
-3. call the relevant *XSettings* APIs from your code
-4. integrate your build system to compile and link with your app.
+2. define your schema by creating `xsettings-schema.h`;
+3. call the relevant *XSettings* APIs from your code;
+4. integrate your build system accordingly.
 
-See the `demo` folder for a basic example. Actually, only `UA_Boolean`,
+Refer to the `demo` folder for a basic example. Actually `UA_Boolean`,
 `UA_Int32`, `UA_UInt32`, `UA_Double` and `UA_String` (up to 255 bytes)
 types are implemented.
 
@@ -44,12 +45,14 @@ $ ./xsettings-demo -d
 $ ./xsettings-demo -c
 ... Creating settings
 $ ./xsettings-demo -d
+#define XSTRING_LEN 255
 #define XSETTINGS \
     /*NAME     TYPE       DEFAULT   DESCRIPTION */ \
     X(Boolean, XBOOLEAN,     true, "Boolean flag setting") \
     X(Int32,   XINT32,       -123, "Integer (32 bits) setting") \
     X(UInt32,  XUINT32,       321, "Unsigned integer (32 bits) setting") \
     X(Double,  XDOUBLE,    -9.876, "Double floating point setting") \
+    X(String,  XSTRING, "String", "String setting, up to 255 chars") \
 /* EOF */
 $ ./xsettings-demo
 ... TCP network layer listening on ...
