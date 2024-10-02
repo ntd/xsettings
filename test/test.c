@@ -1,3 +1,4 @@
+#include <open62541/config.h>
 #include <open62541/server.h>
 #include <open62541/server_config_default.h>
 #include <open62541/plugin/log_stdout.h>
@@ -15,7 +16,15 @@
 
 
 const UA_VariableAttributes UA_VariableAttributes_default;
+
+
+/* Not sure about this one: open62541 removed the `const` somewhere
+ * between 1.3 and 1.4 branches. */
+#if UA_OPEN62541_VER_MAJOR == 1 && UA_OPEN62541_VER_MINOR == 3
 const UA_DataType UA_TYPES[UA_TYPES_COUNT];
+#else
+UA_DataType UA_TYPES[UA_TYPES_COUNT];
+#endif
 
 void
 __wrap_UA_Variant_setScalar(UA_Variant *variant, void *src,
