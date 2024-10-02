@@ -35,6 +35,13 @@ __wrap_UA_Variant_setScalar(UA_Variant *variant, void *src,
     check_expected(type);
 }
 
+void
+__wrap_UA_Variant_setScalarCopy(UA_Variant *variant, void *src,
+                            const UA_DataType *type)
+{
+    __wrap_UA_Variant_setScalar(variant, src, type);
+}
+
 UA_StatusCode
 __wrap_UA_Server_addDataSourceVariableNode(UA_Server *server,
                                            const UA_NodeId requestedNewNodeId,

@@ -18,7 +18,7 @@
 #define TO_VARIANT_XString(dst, src) \
     do { \
         UA_String tmp = UA_STRING(src); \
-        UA_Variant_setScalar(&dst, &tmp, &UA_TYPES[UA_TYPES_STRING]); \
+        UA_Variant_setScalarCopy(&dst, &tmp, &UA_TYPES[UA_TYPES_STRING]); \
     } while (0)
 
 #define FROM_VARIANT_UA_Int32(dst, src)    dst = * (UA_Int32 *) src.data

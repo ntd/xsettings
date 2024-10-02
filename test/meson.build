@@ -6,6 +6,7 @@ test_sources = [
 ldflags = [
     '-Wl,--wrap=UA_Server_addDataSourceVariableNode',
     '-Wl,--wrap=UA_Variant_setScalar',
+    '-Wl,--wrap=UA_Variant_setScalarCopy',
 ]
 
 exe = executable('xsettings-test',
