@@ -111,15 +111,15 @@ register_setting(void *xsettings, UA_Server *server, UA_NodeId folder,
                  const char *name, const char *summary,
                  int idx, const UA_DataSource binding)
 {
-    UA_VariableAttributes attrs;
+    UA_VariableAttributes attr;
     UA_QualifiedName browse;
     UA_NodeId node, reference, definition;
 
-    attrs = UA_VariableAttributes_default;
-    attrs.accessLevel = UA_ACCESSLEVELMASK_READ | UA_ACCESSLEVELMASK_WRITE;
-    attrs.displayName = UA_LOCALIZEDTEXT(NULL, (char *) name);
-    attrs.description = UA_LOCALIZEDTEXT(NULL, (char *) summary);
-    attrs.dataType = UA_TYPES[idx].typeId;
+    attr = UA_VariableAttributes_default;
+    attr.accessLevel = UA_ACCESSLEVELMASK_READ | UA_ACCESSLEVELMASK_WRITE;
+    attr.displayName = UA_LOCALIZEDTEXT(NULL, (char *) name);
+    attr.description = UA_LOCALIZEDTEXT(NULL, (char *) summary);
+    attr.dataType = UA_TYPES[idx].typeId;
 
     node = UA_NODEID_STRING(folder.namespaceIndex, (char *) name);
     browse = UA_QUALIFIEDNAME(folder.namespaceIndex, (char *) name);
@@ -127,7 +127,7 @@ register_setting(void *xsettings, UA_Server *server, UA_NodeId folder,
     definition = UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE);
     return UA_Server_addDataSourceVariableNode(server, node, folder,
                                                reference, browse,
-                                               definition, attrs,
+                                               definition, attr,
                                                binding, xsettings, NULL);
 }
 
