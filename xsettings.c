@@ -117,8 +117,8 @@ register_setting(void *xsettings, UA_Server *server, UA_NodeId folder,
 
     attrs = UA_VariableAttributes_default;
     attrs.accessLevel = UA_ACCESSLEVELMASK_READ | UA_ACCESSLEVELMASK_WRITE;
-    attrs.displayName = UA_LOCALIZEDTEXT("", (char *) name);
-    attrs.description = UA_LOCALIZEDTEXT("", (char *) summary);
+    attrs.displayName = UA_LOCALIZEDTEXT(NULL, (char *) name);
+    attrs.description = UA_LOCALIZEDTEXT(NULL, (char *) summary);
     attrs.dataType = UA_TYPES[idx].typeId;
 
     node = UA_NODEID_STRING(folder.namespaceIndex, (char *) name);
